@@ -8,11 +8,9 @@ interface PropertyRowProps {
 
 export function PropertyRow({ label, children, className }: PropertyRowProps) {
   return (
-    <div className={cn("flex items-center gap-2", className)}>
-      <span className="text-xs text-muted-foreground w-20 shrink-0">
-        {label}
-      </span>
-      <div className="flex-1 min-w-0">{children}</div>
+    <div className={cn("flex flex-col gap-1.5", className)}>
+      <span className="text-xs text-muted-foreground">{label}</span>
+      <div className="min-w-0">{children}</div>
     </div>
   );
 }

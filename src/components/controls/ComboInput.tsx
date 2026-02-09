@@ -15,6 +15,7 @@ export interface ComboInputProps {
   placeholder?: string;
   className?: string;
   disabled?: boolean;
+  icon?: React.ReactNode;
 }
 
 export function ComboInput({
@@ -24,6 +25,7 @@ export function ComboInput({
   placeholder,
   className,
   disabled,
+  icon,
 }: ComboInputProps) {
   const [isOpen, setIsOpen] = React.useState(false);
   const containerRef = React.useRef<HTMLDivElement>(null);
@@ -48,24 +50,37 @@ export function ComboInput({
 
   if (!presets.length) {
     return (
-      <Input
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder={placeholder}
-        disabled={disabled}
-        className={className}
-      />
+      <div className={cn("relative w-full", className)}>
+        {icon && (
+          <div className='absolute left-2 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none'>
+            {icon}
+          </div>
+        )}
+        <Input
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder={placeholder}
+          disabled={disabled}
+          className={cn("h-8 text-sm", icon && "pl-7")}
+        />
+      </div>
     );
   }
 
   return (
     <div ref={containerRef} className={cn("relative w-full", className)}>
+      {icon && (
+        <div className='absolute left-2 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none z-10'>
+          {icon}
+        </div>
+      )}
       <Input
         value={value}
         onChange={(e) => onChange(e.target.value)}
         onFocus={() => setIsOpen(true)}
         placeholder={placeholder}
         disabled={disabled}
+        className={cn("h-8 text-sm", icon && "pl-7")}
       />
 
       {isOpen && (

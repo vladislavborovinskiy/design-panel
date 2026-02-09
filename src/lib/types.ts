@@ -24,6 +24,7 @@ export interface TextProperties {
   fontWeight: number;
   color: string;
   textAlign: "left" | "center" | "right" | "justify";
+  textDecoration: "" | "italic" | "strikethrough" | "underline" | "overline" | "tabular-nums";
   lineHeight: string;
   letterSpacing: string;
 }
@@ -44,7 +45,11 @@ export interface ImageProperties {
 
 export interface BorderProperties {
   borderWidth: string;
-  borderStyle: "solid" | "dashed" | "dotted" | "none";
+  borderWidthTop: string;
+  borderWidthRight: string;
+  borderWidthBottom: string;
+  borderWidthLeft: string;
+  borderStyle: "" | "solid" | "dashed" | "dotted" | "none";
   borderColor: string;
 }
 
@@ -54,7 +59,7 @@ export interface AppearanceProperties {
 }
 
 export type TextElementProperties = CommonProperties & TextProperties & BorderProperties & AppearanceProperties;
-export type ButtonElementProperties = CommonProperties & ButtonProperties & BorderProperties & AppearanceProperties;
+export type ButtonElementProperties = CommonProperties & ButtonProperties & TextProperties & BorderProperties & AppearanceProperties;
 export type ImageElementProperties = CommonProperties & ImageProperties & BorderProperties & AppearanceProperties;
 export type DivElementProperties = CommonProperties & BorderProperties & AppearanceProperties;
 

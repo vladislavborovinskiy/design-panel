@@ -3,7 +3,7 @@ import * as TabsPrimitive from "@radix-ui/react-tabs";
 import { cn } from "@/lib/utils";
 
 interface TabGroupProps {
-  tabs: ReadonlyArray<{ readonly value: string; readonly label: string }>;
+  tabs: ReadonlyArray<{ readonly value: string; readonly label?: string; readonly icon?: React.ReactNode }>;
   value: string;
   onValueChange: (value: string) => void;
   className?: string;
@@ -64,6 +64,7 @@ export function TabGroup({ tabs, value, onValueChange, className }: TabGroupProp
                   : "text-muted-foreground hover:text-foreground",
               )}
             >
+              {tab.icon}
               {tab.label}
             </TabsPrimitive.Trigger>
           ))}

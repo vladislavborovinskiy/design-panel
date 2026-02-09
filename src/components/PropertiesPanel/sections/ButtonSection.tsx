@@ -1,9 +1,16 @@
 import { useDesign } from "@/app/providers/useDesign";
 import { SectionHeader } from "@/components/controls/SectionHeader";
 import { PropertyRow } from "@/components/controls/PropertyRow";
-import { ButtonGroup, ButtonGroupItem } from "@/components/ui/ButtonGroup";
+import { ButtonGroup } from "@/components/ui/ButtonGroup";
 import { BUTTON_VARIANTS, BUTTON_SIZES } from "@/lib";
 import type { ButtonElementProperties } from "@/lib";
+
+const VARIANT_TABS = BUTTON_VARIANTS.map((v) => ({ value: v, label: v }));
+const SIZE_TABS = BUTTON_SIZES.map((s) => ({ value: s, label: s.toUpperCase() }));
+const DISABLED_TABS = [
+  { value: "no", label: "No" },
+  { value: "yes", label: "Yes" },
+] as const;
 
 export function ButtonSection() {
   const { currentProperties, updateProperty } = useDesign();
@@ -13,54 +20,26 @@ export function ButtonSection() {
     <SectionHeader title="Button">
       <PropertyRow label="Variant">
         <ButtonGroup
-          type="single"
+          options={VARIANT_TABS}
           value={props.variant}
-          onValueChange={(v) => {
-            if (v) updateProperty("variant", v);
-          }}
-          className="w-full"
-        >
-          {BUTTON_VARIANTS.map((variant) => (
-            <ButtonGroupItem key={variant} value={variant} className="flex-1 text-xs capitalize">
-              {variant}
-            </ButtonGroupItem>
-          ))}
-        </ButtonGroup>
+          onValueChange={(v) => updateProperty("variant", v)}
+        />
       </PropertyRow>
 
       <PropertyRow label="Size">
         <ButtonGroup
-          type="single"
+          options={SIZE_TABS}
           value={props.size}
-          onValueChange={(v) => {
-            if (v) updateProperty("size", v);
-          }}
-          className="w-full"
-        >
-          {BUTTON_SIZES.map((size) => (
-            <ButtonGroupItem key={size} value={size} className="flex-1 text-xs uppercase">
-              {size}
-            </ButtonGroupItem>
-          ))}
-        </ButtonGroup>
+          onValueChange={(v) => updateProperty("size", v)}
+        />
       </PropertyRow>
 
       <PropertyRow label="Disabled">
         <ButtonGroup
-          type="single"
+          options={DISABLED_TABS}
           value={props.disabled ? "yes" : "no"}
-          onValueChange={(v) => {
-            if (v) updateProperty("disabled", v === "yes");
-          }}
-          className="w-full"
-        >
-          <ButtonGroupItem value="no" className="flex-1 text-xs">
-            No
-          </ButtonGroupItem>
-          <ButtonGroupItem value="yes" className="flex-1 text-xs">
-            Yes
-          </ButtonGroupItem>
-        </ButtonGroup>
+          onValueChange={(v) => updateProperty("disabled", v === "yes")}
+        />
       </PropertyRow>
     </SectionHeader>
   );

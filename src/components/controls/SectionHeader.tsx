@@ -8,31 +8,22 @@ interface SectionHeaderProps {
   children: React.ReactNode;
 }
 
-export function SectionHeader({
-  title,
-  defaultOpen = true,
-  children,
-}: SectionHeaderProps) {
+export function SectionHeader({ title, defaultOpen = true, children }: SectionHeaderProps) {
   const [isOpen, setIsOpen] = React.useState(defaultOpen);
 
   return (
-    <div className="border-b border-border">
+    <div className='border-b border-border'>
       <button
-        type="button"
+        type='button'
         onClick={() => setIsOpen(!isOpen)}
-        className="flex w-full items-center justify-between px-4 py-2.5 hover:bg-accent/50 transition-colors"
+        className='flex w-full items-center justify-between px-4 py-2.5 hover:bg-accent/50 transition-colors'
       >
-        <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-          {title}
-        </span>
+        <span className='text-xs font-medium tracking-wider uppercase'>{title}</span>
         <CaretDownIcon
-          className={cn(
-            "size-3.5 text-muted-foreground transition-transform duration-200",
-            !isOpen && "-rotate-90",
-          )}
+          className={cn("size-3.5 transition-transform duration-200", !isOpen && "-rotate-90")}
         />
       </button>
-      {isOpen && <div className="px-4 pb-3 space-y-2.5">{children}</div>}
+      {isOpen && <div className='px-4 pt-1.5 pb-3 space-y-2.5'>{children}</div>}
     </div>
   );
 }
