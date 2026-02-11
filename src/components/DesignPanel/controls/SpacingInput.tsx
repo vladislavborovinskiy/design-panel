@@ -1,31 +1,49 @@
 import * as React from "react";
-import type { SpacingValue } from "@/lib";
+import type { SpacingValue } from "@/lib/types";
 import { cn } from "@/lib/utils";
-import { SPACING_PRESETS } from "@/lib";
-import { ComboInput } from "@/components/controls/ComboInput";
+import { SPACING_PRESETS } from "@/lib/constants";
+import { ComboInput } from "@/components/DesignPanel/controls/ComboInput";
 import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/Tooltip";
 import {
-  ArrowsHorizontalIcon,
-  ArrowsVerticalIcon,
-  ArrowUpIcon,
-  ArrowDownIcon,
-  ArrowLeftIcon,
-  ArrowRightIcon,
   ArrowsOutCardinalIcon,
   CornersOutIcon,
   LockSimpleIcon,
 } from "@phosphor-icons/react";
+import { MarginIcon } from "@/components/DesignPanel/icons/MarginIcon";
+import { MarginBlockIcon } from "@/components/DesignPanel/icons/MarginBlockIcon";
 
 type SpacingMode = "xy" | "sides" | "single";
 
-interface SpacingControlProps {
+interface SpacingInputProps {
   value: SpacingValue;
   onChange: (side: keyof SpacingValue, value: string) => void;
   className?: string;
+  SideIcon?: React.ComponentType<{ size?: number; className?: string }>;
+  BlockIcon?: React.ComponentType<{ size?: number; className?: string }>;
 }
 
-export function SpacingControl({ value, onChange, className }: SpacingControlProps) {
+const SINGLE_ICON = <ArrowsOutCardinalIcon size={16} />;
+
+export function SpacingInput({
+  value,
+  onChange,
+  className,
+  SideIcon = MarginIcon,
+  BlockIcon = MarginBlockIcon,
+}: SpacingInputProps) {
   const [mode, setMode] = React.useState<SpacingMode>("xy");
+
+  const blockIcons = React.useMemo(() => ({
+    x: <BlockIcon size={16} />,
+    y: <BlockIcon size={16} className="rotate-90" />,
+  }), [BlockIcon]);
+
+  const sideIcons = React.useMemo(() => ({
+    top: <SideIcon size={16} />,
+    right: <SideIcon size={16} className="rotate-90" />,
+    bottom: <SideIcon size={16} className="rotate-180" />,
+    left: <SideIcon size={16} className="-rotate-90" />,
+  }), [SideIcon]);
 
   const handleSingleChange = (v: string) => {
     onChange("top", v);
@@ -54,14 +72,14 @@ export function SpacingControl({ value, onChange, className }: SpacingControlPro
               onChange={handleXChange}
               presets={SPACING_PRESETS}
               placeholder='0'
-              icon={<ArrowsHorizontalIcon size={14} />}
+              icon={blockIcons.x}
             />
             <ComboInput
               value={value.top}
               onChange={handleYChange}
               presets={SPACING_PRESETS}
               placeholder='0'
-              icon={<ArrowsVerticalIcon size={14} />}
+              icon={blockIcons.y}
             />
           </div>
         )}
@@ -73,28 +91,28 @@ export function SpacingControl({ value, onChange, className }: SpacingControlPro
               onChange={(v) => onChange("top", v)}
               presets={SPACING_PRESETS}
               placeholder='0'
-              icon={<ArrowUpIcon size={14} />}
+              icon={sideIcons.top}
             />
             <ComboInput
               value={value.right}
               onChange={(v) => onChange("right", v)}
               presets={SPACING_PRESETS}
               placeholder='0'
-              icon={<ArrowRightIcon size={14} />}
+              icon={sideIcons.right}
             />
             <ComboInput
               value={value.bottom}
               onChange={(v) => onChange("bottom", v)}
               presets={SPACING_PRESETS}
               placeholder='0'
-              icon={<ArrowDownIcon size={14} />}
+              icon={sideIcons.bottom}
             />
             <ComboInput
               value={value.left}
               onChange={(v) => onChange("left", v)}
               presets={SPACING_PRESETS}
               placeholder='0'
-              icon={<ArrowLeftIcon size={14} />}
+              icon={sideIcons.left}
             />
           </div>
         )}
@@ -105,7 +123,7 @@ export function SpacingControl({ value, onChange, className }: SpacingControlPro
             onChange={handleSingleChange}
             presets={SPACING_PRESETS}
             placeholder='0'
-            icon={<ArrowsOutCardinalIcon size={14} />}
+            icon={SINGLE_ICON}
           />
         )}
       </div>

@@ -1,7 +1,6 @@
-import { useDesign } from "@/app/providers/useDesign";
-import { SectionHeader } from "@/components/controls/SectionHeader";
-import { PropertyRow } from "@/components/controls/PropertyRow";
-import { ComboInput } from "@/components/controls/ComboInput";
+import { Section } from "@/components/DesignPanel/controls/Section";
+import { Field } from "@/components/DesignPanel/controls/Field";
+import { ComboInput } from "@/components/DesignPanel/controls/ComboInput";
 import {
   Select,
   SelectTrigger,
@@ -19,8 +18,8 @@ import {
   LETTER_SPACING_PRESETS,
   TEXT_ALIGN_OPTIONS,
   TEXT_DECORATION_OPTIONS,
-} from "@/lib";
-import type { TextElementProperties } from "@/lib";
+} from "@/lib/constants";
+import type { ElementPropertiesMap, ElementType, TextElementProperties } from "@/lib/types";
 import {
   TextAlignLeftIcon,
   TextAlignCenterIcon,
@@ -34,7 +33,9 @@ import {
 
 const ALIGN_TABS = TEXT_ALIGN_OPTIONS.map((align) => ({
   value: align,
-  tooltip: { left: "Align Left", center: "Align Center", right: "Align Right", justify: "Justify" }[align],
+  tooltip: { left: "Align Left", center: "Align Center", right: "Align Right", justify: "Justify" }[
+    align
+  ],
   icon: {
     left: <TextAlignLeftIcon className='size-5' />,
     center: <TextAlignCenterIcon className='size-5' />,
@@ -45,24 +46,40 @@ const ALIGN_TABS = TEXT_ALIGN_OPTIONS.map((align) => ({
 
 const DECORATION_TABS = TEXT_DECORATION_OPTIONS.map((dec) => ({
   value: dec,
-  tooltip: { italic: "Italic", strikethrough: "Strikethrough", underline: "Underline", overline: "Overline", "tabular-nums": "Tabular Numbers" }[dec],
+  tooltip: {
+    italic: "Italic",
+    strikethrough: "Strikethrough",
+    underline: "Underline",
+    overline: "Overline",
+    "tabular-nums": "Tabular Numbers",
+  }[dec],
   icon: {
     italic: <TextItalicIcon className='size-5' />,
     strikethrough: <TextStrikethroughIcon className='size-5' />,
     underline: <TextUnderlineIcon className='size-5' />,
-    overline: <TextUnderlineIcon className='size-4 rotate-180' />,
+    overline: <TextUnderlineIcon className='size-5 rotate-180' />,
     "tabular-nums": <NumberZeroIcon className='size-5' />,
   }[dec],
 }));
 
-export function TypographySection() {
-  const { currentProperties, updateProperty } = useDesign();
+interface TypographySectionProps {
+  currentProperties: ElementPropertiesMap[ElementType];
+  onPropertyChange: (key: string, value: unknown) => void;
+}
+
+export function TypographySection({ currentProperties, onPropertyChange }: TypographySectionProps) {
   const props = currentProperties as TextElementProperties;
 
   return (
-    <SectionHeader title='Typography'>
-      <Select value={props.fontFamily || "default"} onValueChange={(v) => updateProperty("fontFamily", v === "default" ? "" : v)}>
-        <SelectTrigger size='sm' className={cn('w-full', !props.fontFamily && 'text-muted-foreground')}>
+    <Section title='Typography'>
+      <Select
+        value={props.fontFamily || "default"}
+        onValueChange={(v) => onPropertyChange("fontFamily", v === "default" ? "" : v)}
+      >
+        <SelectTrigger
+          size='sm'
+          className={cn("w-full", !props.fontFamily && "text-muted-foreground")}
+        >
           <SelectValue placeholder='Default' />
         </SelectTrigger>
         <SelectContent>
@@ -78,9 +95,12 @@ export function TypographySection() {
       <div className='grid grid-cols-2 gap-2'>
         <Select
           value={props.fontSize || "default"}
-          onValueChange={(v) => updateProperty("fontSize", v === "default" ? "" : v)}
+          onValueChange={(v) => onPropertyChange("fontSize", v === "default" ? "" : v)}
         >
-          <SelectTrigger size='sm' className={cn('w-full', !props.fontSize && 'text-muted-foreground')}>
+          <SelectTrigger
+            size='sm'
+            className={cn("w-full", !props.fontSize && "text-muted-foreground")}
+          >
             <SelectValue placeholder='Default' />
           </SelectTrigger>
           <SelectContent>
@@ -94,9 +114,12 @@ export function TypographySection() {
         </Select>
         <Select
           value={props.fontWeight ? String(props.fontWeight) : "default"}
-          onValueChange={(v) => updateProperty("fontWeight", v === "default" ? 0 : Number(v))}
+          onValueChange={(v) => onPropertyChange("fontWeight", v === "default" ? 0 : Number(v))}
         >
-          <SelectTrigger size='sm' className={cn('w-full', !props.fontWeight && 'text-muted-foreground')}>
+          <SelectTrigger
+            size='sm'
+            className={cn("w-full", !props.fontWeight && "text-muted-foreground")}
+          >
             <SelectValue placeholder='Default' />
           </SelectTrigger>
           <SelectContent>
@@ -111,37 +134,37 @@ export function TypographySection() {
       </div>
 
       <div className='grid grid-cols-2 gap-2'>
-        <PropertyRow label='Line Height'>
+        <Field label='Line Height'>
           <ComboInput
             value={props.lineHeight}
-            onChange={(v) => updateProperty("lineHeight", v)}
+            onChange={(v) => onPropertyChange("lineHeight", v)}
             presets={LINE_HEIGHT_PRESETS}
             placeholder='1.5rem'
           />
-        </PropertyRow>
-        <PropertyRow label='Letter Spacing'>
+        </Field>
+        <Field label='Letter Spacing'>
           <ComboInput
             value={props.letterSpacing}
-            onChange={(v) => updateProperty("letterSpacing", v)}
+            onChange={(v) => onPropertyChange("letterSpacing", v)}
             presets={LETTER_SPACING_PRESETS}
             placeholder='0'
           />
-        </PropertyRow>
-        <PropertyRow label='Align'>
+        </Field>
+        <Field label='Align'>
           <ButtonGroup
             options={ALIGN_TABS}
             value={props.textAlign}
-            onValueChange={(v) => updateProperty("textAlign", v)}
+            onValueChange={(v) => onPropertyChange("textAlign", v)}
           />
-        </PropertyRow>
-        <PropertyRow label='Decoration'>
+        </Field>
+        <Field label='Decoration'>
           <ButtonGroup
             options={DECORATION_TABS}
             value={props.textDecoration}
-            onValueChange={(v) => updateProperty("textDecoration", v)}
+            onValueChange={(v) => onPropertyChange("textDecoration", v)}
           />
-        </PropertyRow>
+        </Field>
       </div>
-    </SectionHeader>
+    </Section>
   );
 }

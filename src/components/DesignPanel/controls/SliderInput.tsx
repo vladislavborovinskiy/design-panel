@@ -10,6 +10,8 @@ interface SliderInputProps {
   step?: number;
   suffix?: string;
   className?: string;
+  trackClassName?: string;
+  showRange?: boolean;
 }
 
 export function SliderInput({
@@ -20,6 +22,8 @@ export function SliderInput({
   step = 1,
   suffix,
   className,
+  trackClassName,
+  showRange,
 }: SliderInputProps) {
   return (
     <div className={cn("flex items-center gap-3", className)}>
@@ -30,6 +34,8 @@ export function SliderInput({
         max={max}
         step={step}
         className="flex-1"
+        trackClassName={trackClassName}
+        showRange={showRange}
       />
       <div className="flex items-center gap-1 shrink-0">
         <Input

@@ -1,11 +1,11 @@
 import * as React from "react";
-import { cn } from "@/lib/utils";
+import { cn, formatColorValue } from "@/lib/utils";
 import { Input } from "@/components/ui/Input";
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/Popover";
 import { TabGroup } from "@/components/ui/TabGroup";
 import { ScrollArea } from "@/components/ui/ScrollArea";
-import { SYSTEM_COLORS, TAILWIND_COLORS } from "@/lib";
-import { CaretDownIcon } from "@phosphor-icons/react";
+import { SYSTEM_COLORS, TAILWIND_COLORS } from "@/lib/constants";
+import { CaretDownIcon, CursorClickIcon } from "@phosphor-icons/react";
 
 interface ColorPickerProps {
   value: string;
@@ -106,7 +106,7 @@ export function ColorPicker({ value: valueProp, onChange, className }: ColorPick
               value ? "font-mono" : "text-muted-foreground",
             )}
           >
-            {value || "Default"}
+            {formatColorValue(value)}
           </span>
           <CaretDownIcon className='size-4 shrink-0 opacity-50' />
         </button>
@@ -184,13 +184,18 @@ export function ColorPicker({ value: valueProp, onChange, className }: ColorPick
 
           {tab === "custom" && (
             <div className='space-y-3'>
-              <input
-                ref={colorInputRef}
-                type='color'
-                defaultValue={value.startsWith("#") ? value : "#000000"}
-                onChange={(e) => handleNativeColor(e.target.value)}
-                className='h-24 w-full cursor-pointer rounded-md border border-input p-1'
-              />
+              <div className='relative'>
+                <input
+                  ref={colorInputRef}
+                  type='color'
+                  defaultValue={value.startsWith("#") ? value : "#000000"}
+                  onChange={(e) => handleNativeColor(e.target.value)}
+                  className='h-24 w-full cursor-pointer rounded-md border border-input p-1'
+                />
+                <div className='absolute bg-white p-1.5 rounded-full border shadow-md bottom-4 right-4 pointer-events-none'>
+                  <CursorClickIcon weight='fill' className='size-4 pointer-events-none' />
+                </div>
+              </div>
               <input
                 ref={hexInputRef}
                 defaultValue={value.startsWith("#") ? value : "#000000"}

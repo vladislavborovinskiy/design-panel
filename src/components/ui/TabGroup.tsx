@@ -3,7 +3,11 @@ import * as TabsPrimitive from "@radix-ui/react-tabs";
 import { cn } from "@/lib/utils";
 
 interface TabGroupProps {
-  tabs: ReadonlyArray<{ readonly value: string; readonly label?: string; readonly icon?: React.ReactNode }>;
+  tabs: ReadonlyArray<{
+    readonly value: string;
+    readonly label?: string;
+    readonly icon?: React.ReactNode;
+  }>;
   value: string;
   onValueChange: (value: string) => void;
   className?: string;
@@ -12,11 +16,10 @@ interface TabGroupProps {
 export function TabGroup({ tabs, value, onValueChange, className }: TabGroupProps) {
   const tabRefs = React.useRef<(HTMLButtonElement | null)[]>([]);
   const containerRef = React.useRef<HTMLDivElement>(null);
-  const [indicatorStyle, setIndicatorStyle] = React.useState({ left: 0, width: 0 });
+  const [indicatorStyle, setIndicatorStyle] = React.useState<{ left: number; width: number } | null>(null);
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     const currentIndex = tabs.findIndex((tab) => tab.value === value);
-
     const activeTab = tabRefs.current[currentIndex];
     const container = containerRef.current;
 
@@ -38,15 +41,16 @@ export function TabGroup({ tabs, value, onValueChange, className }: TabGroupProp
       className={cn("w-full", className)}
     >
       <div ref={containerRef} className='relative bg-muted rounded-lg p-1'>
-        <div
-          className='absolute inset-y-1 bg-background rounded-md shadow-sm transition-all duration-200 ease-out'
-          style={{
-            left: `${indicatorStyle.left}px`,
-            width: `${indicatorStyle.width}px`,
-          }}
-        />
+        {indicatorStyle && (
+          <div
+            className='absolute inset-y-1 bg-background rounded-md shadow-sm transition-all duration-200 ease-out'
+            style={{
+              left: `${indicatorStyle.left}px`,
+              width: `${indicatorStyle.width}px`,
+            }}
+          />
+        )}
 
-        {/* Tabs */}
         <TabsPrimitive.List className='relative flex w-full'>
           {tabs.map((tab, index) => (
             <TabsPrimitive.Trigger

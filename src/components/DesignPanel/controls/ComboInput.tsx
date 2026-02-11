@@ -28,6 +28,7 @@ export function ComboInput({
   icon,
 }: ComboInputProps) {
   const [isOpen, setIsOpen] = React.useState(false);
+  const [dropUp, setDropUp] = React.useState(false);
   const containerRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
@@ -42,6 +43,15 @@ export function ComboInput({
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isOpen]);
+
+  const handleOpen = () => {
+    if (containerRef.current) {
+      const rect = containerRef.current.getBoundingClientRect();
+      const spaceBelow = window.innerHeight - rect.bottom;
+      setDropUp(spaceBelow < 260);
+    }
+    setIsOpen(true);
+  };
 
   const handleSelect = (presetValue: string) => {
     onChange(presetValue);
@@ -77,14 +87,17 @@ export function ComboInput({
       <Input
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        onFocus={() => setIsOpen(true)}
+        onFocus={handleOpen}
         placeholder={placeholder}
         disabled={disabled}
         className={cn("h-8 text-sm", icon && "pl-7")}
       />
 
       {isOpen && (
-        <div className='absolute z-50 w-full mt-1 bg-popover rounded-md border shadow-md max-h-60 overflow-auto p-1 animate-in fade-in-0 zoom-in-95'>
+        <div className={cn(
+          'absolute z-50 w-full bg-popover rounded-md border shadow-md max-h-60 overflow-auto p-1 animate-in fade-in-0 zoom-in-95',
+          dropUp ? 'bottom-full mb-1' : 'top-full mt-1',
+        )}>
           {presets.map((preset) => (
             <Button
               key={preset.value}
