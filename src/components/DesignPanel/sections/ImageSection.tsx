@@ -1,17 +1,8 @@
 import * as React from "react";
 import { Section } from "@/components/DesignPanel/controls/Section";
 import { Field } from "@/components/DesignPanel/controls/Field";
-import { ComboInput } from "@/components/DesignPanel/controls/ComboInput";
 import { Input } from "@/components/ui/Input";
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-} from "@/components/ui/Select";
 import { shallowEqualProps } from "@/lib/utils";
-import { OBJECT_FIT_OPTIONS, ASPECT_RATIO_PRESETS } from "@/lib/constants";
 import type { ImageElementProperties, ElementPropertiesMap, ElementType } from "@/lib/types";
 
 interface ImageSectionProps {
@@ -35,32 +26,6 @@ export const ImageSection = React.memo(function ImageSection({
           placeholder='Image description'
         />
       </Field>
-
-      <div className='grid grid-cols-2 gap-2'>
-        <Field label='Fit'>
-          <Select value={props.objectFit} onValueChange={(v) => onPropertyChange("objectFit", v)}>
-            <SelectTrigger size='sm' className='w-full'>
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {OBJECT_FIT_OPTIONS.map((fit) => (
-                <SelectItem key={fit} value={fit}>
-                  {fit}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </Field>
-
-        <Field label='Ratio'>
-          <ComboInput
-            value={props.aspectRatio}
-            onChange={(v) => onPropertyChange("aspectRatio", v)}
-            presets={ASPECT_RATIO_PRESETS}
-            placeholder='auto'
-          />
-        </Field>
-      </div>
     </Section>
   );
 }, shallowEqualProps);

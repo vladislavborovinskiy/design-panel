@@ -11,6 +11,7 @@ import { BorderSection } from "./sections/BorderSection";
 import { AppearanceSection } from "./sections/AppearanceSection";
 import { ShadowSection } from "./sections/ShadowSection";
 import { UploadSection } from "./sections/UploadSection";
+import { SizeSection } from "./sections/SizeSection";
 import { ImageSection } from "./sections/ImageSection";
 import { ButtonSection } from "./sections/ButtonSection";
 import type { ElementType, ElementPropertiesMap, SpacingValue } from "@/lib/types";
@@ -92,6 +93,12 @@ export function DesignPanel({
             currentProperties={currentProperties}
             onPropertyChange={onPropertyChange}
           />
+          {showImageProperties && (
+            <SizeSection
+              currentProperties={currentProperties}
+              onPropertyChange={onPropertyChange}
+            />
+          )}
           {showImageProperties && (
             <ImageSection
               currentProperties={currentProperties}

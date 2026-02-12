@@ -32,7 +32,6 @@ export const SHADOW_PRESETS = [
 
 export const BORDER_STYLES = ["solid", "dashed", "dotted", "none"] as const;
 
-
 export const LINE_HEIGHT_PRESETS = [
   { value: "0.75rem", label: "0.75rem" },
   { value: "1rem", label: "1rem" },
@@ -93,6 +92,66 @@ export const SPACING_PRESETS = [
   .map((v) => ({ value: v, label: v }))
   .concat({ value: "auto", label: "auto" });
 
+export const SIZE_PRESETS = [
+  "0px",
+  "1px",
+  "2px",
+  "4px",
+  "6px",
+  "8px",
+  "10px",
+  "12px",
+  "14px",
+  "16px",
+  "20px",
+  "24px",
+  "28px",
+  "32px",
+  "36px",
+  "40px",
+  "44px",
+  "48px",
+  "56px",
+  "64px",
+  "80px",
+  "96px",
+  "112px",
+  "128px",
+  "144px",
+  "160px",
+  "176px",
+  "192px",
+  "208px",
+  "224px",
+  "240px",
+  "256px",
+  "288px",
+  "320px",
+  "384px",
+  "1/12",
+  "2/12",
+  "3/12",
+  "4/12",
+  "5/12",
+  "6/12",
+  "7/12",
+  "8/12",
+  "9/12",
+  "10/12",
+  "11/12",
+  "25%",
+  "33%",
+  "50%",
+  "66%",
+  "75%",
+  "100%",
+  "min-content",
+  "max-content",
+  "fit-content",
+]
+  .map((v) => ({ value: v, label: v }))
+  .concat({ value: "auto", label: "auto" });
+
 export const BORDER_RADIUS_PRESETS = [
   { value: "0", label: "None" },
   { value: "var(--radius-xs)", label: "Extra Small" },
@@ -130,16 +189,6 @@ export const BORDER_WIDTH_PRESETS = [
   { value: "8px", label: "8px" },
 ];
 
-export const ASPECT_RATIO_PRESETS = [
-  { value: "auto", label: "Auto" },
-  { value: "1/1", label: "1:1" },
-  { value: "4/3", label: "4:3" },
-  { value: "16/9", label: "16:9" },
-  { value: "3/2", label: "3:2" },
-  { value: "2/1", label: "2:1" },
-];
-
-export const OBJECT_FIT_OPTIONS = ["contain", "cover", "fill", "none", "scale-down"] as const;
 export const BUTTON_VARIANTS = ["primary", "secondary", "outline", "ghost"] as const;
 export const BUTTON_SIZES = ["xs", "sm", "md", "lg", "xl"] as const;
 export const TEXT_ALIGN_OPTIONS = ["left", "center", "right", "justify"] as const;
@@ -428,8 +477,8 @@ export const DEFAULT_BUTTON_PROPERTIES: ButtonElementProperties = {
   backgroundColor: "",
   borderRadius: "",
   text: "",
-  variant: "primary",
-  size: "md",
+  variant: "",
+  size: "",
   disabled: false,
   content: "",
   fontFamily: "",
@@ -452,7 +501,7 @@ export const DEFAULT_BUTTON_PROPERTIES: ButtonElementProperties = {
 };
 
 export const DEFAULT_IMAGE_PROPERTIES: ImageElementProperties = {
-  width: "300px",
+  width: "100%",
   height: "auto",
   padding: { ...DEFAULT_SPACING },
   margin: { ...DEFAULT_SPACING },
@@ -460,8 +509,6 @@ export const DEFAULT_IMAGE_PROPERTIES: ImageElementProperties = {
   borderRadius: "",
   src: "",
   alt: "",
-  objectFit: "cover",
-  aspectRatio: "auto",
   borderWidth: "",
   borderWidthTop: "",
   borderWidthRight: "",

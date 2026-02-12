@@ -30,16 +30,14 @@ export interface TextProperties {
 
 export interface ButtonProperties {
   text: string;
-  variant: "primary" | "secondary" | "outline" | "ghost";
-  size: "xs" | "sm" | "md" | "lg" | "xl";
+  variant: "" | "primary" | "secondary" | "outline" | "ghost";
+  size: "" | "xs" | "sm" | "md" | "lg" | "xl";
   disabled: boolean;
 }
 
 export interface ImageProperties {
   src: string;
   alt: string;
-  objectFit: "contain" | "cover" | "fill" | "none" | "scale-down";
-  aspectRatio: string;
 }
 
 export interface BorderProperties {
@@ -57,9 +55,19 @@ export interface AppearanceProperties {
   boxShadow: string;
 }
 
-export type TextElementProperties = CommonProperties & TextProperties & BorderProperties & AppearanceProperties;
-export type ButtonElementProperties = CommonProperties & ButtonProperties & TextProperties & BorderProperties & AppearanceProperties;
-export type ImageElementProperties = CommonProperties & ImageProperties & BorderProperties & AppearanceProperties;
+export type TextElementProperties = CommonProperties &
+  TextProperties &
+  BorderProperties &
+  AppearanceProperties;
+export type ButtonElementProperties = CommonProperties &
+  ButtonProperties &
+  TextProperties &
+  BorderProperties &
+  AppearanceProperties;
+export type ImageElementProperties = CommonProperties &
+  ImageProperties &
+  BorderProperties &
+  AppearanceProperties;
 export type DivElementProperties = CommonProperties & BorderProperties & AppearanceProperties;
 
 export interface ElementPropertiesMap {
