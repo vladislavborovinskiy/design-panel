@@ -1,6 +1,8 @@
+import * as React from "react";
 import { Section } from "@/components/DesignPanel/controls/Section";
 import { Field } from "@/components/DesignPanel/controls/Field";
 import { ButtonGroup } from "@/components/ui/ButtonGroup";
+import { shallowEqualProps } from "@/lib/utils";
 import { BUTTON_VARIANTS, BUTTON_SIZES } from "@/lib/constants";
 import type { ButtonElementProperties, ElementPropertiesMap, ElementType } from "@/lib/types";
 
@@ -16,7 +18,7 @@ interface ButtonSectionProps {
   onPropertyChange: (key: string, value: unknown) => void;
 }
 
-export function ButtonSection({ currentProperties, onPropertyChange }: ButtonSectionProps) {
+export const ButtonSection = React.memo(function ButtonSection({ currentProperties, onPropertyChange }: ButtonSectionProps) {
   const props = currentProperties as ButtonElementProperties;
 
   return (
@@ -46,4 +48,4 @@ export function ButtonSection({ currentProperties, onPropertyChange }: ButtonSec
       </div>
     </Section>
   );
-}
+}, shallowEqualProps);

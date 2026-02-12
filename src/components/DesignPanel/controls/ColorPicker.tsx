@@ -184,15 +184,15 @@ export function ColorPicker({ value: valueProp, onChange, className }: ColorPick
 
           {tab === "custom" && (
             <div className='space-y-3'>
-              <div className='relative'>
+              <div className='relative rounded-md p-0 border border-input overflow-hidden'>
                 <input
                   ref={colorInputRef}
                   type='color'
                   defaultValue={value.startsWith("#") ? value : "#000000"}
                   onChange={(e) => handleNativeColor(e.target.value)}
-                  className='h-24 w-full cursor-pointer rounded-md border border-input p-1'
+                  className='h-20 scale-150 w-full cursor-pointer'
                 />
-                <div className='absolute bg-white p-1.5 rounded-full border shadow-md bottom-4 right-4 pointer-events-none'>
+                <div className='absolute bg-white p-1.5 rounded-full border bottom-2 right-2 pointer-events-none'>
                   <CursorClickIcon weight='fill' className='size-4 pointer-events-none' />
                 </div>
               </div>

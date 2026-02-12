@@ -10,7 +10,7 @@ import {
   SelectItem,
 } from "@/components/ui/Select";
 import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/Tooltip";
-import { cn } from "@/lib/utils";
+import { cn, shallowEqualProps } from "@/lib/utils";
 import { BORDER_STYLES, BORDER_WIDTH_PRESETS } from "@/lib/constants";
 import type { BorderProperties, ElementPropertiesMap, ElementType } from "@/lib/types";
 import { CornersOutIcon } from "@phosphor-icons/react";
@@ -30,7 +30,7 @@ interface BorderSectionProps {
   onPropertyChange: (key: string, value: unknown) => void;
 }
 
-export function BorderSection({ currentProperties, onPropertyChange }: BorderSectionProps) {
+export const BorderSection = React.memo(function BorderSection({ currentProperties, onPropertyChange }: BorderSectionProps) {
   const props = currentProperties as BorderProperties & { borderRadius: string };
   const [showAllSides, setShowAllSides] = React.useState(false);
 
@@ -131,4 +131,4 @@ export function BorderSection({ currentProperties, onPropertyChange }: BorderSec
       </div>
     </Section>
   );
-}
+}, shallowEqualProps);

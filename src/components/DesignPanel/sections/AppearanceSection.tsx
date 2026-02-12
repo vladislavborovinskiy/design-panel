@@ -1,3 +1,4 @@
+import * as React from "react";
 import { Section } from "@/components/DesignPanel/controls/Section";
 import { Field } from "@/components/DesignPanel/controls/Field";
 import { SliderInput } from "@/components/DesignPanel/controls/SliderInput";
@@ -8,7 +9,7 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/Select";
-import { cn } from "@/lib/utils";
+import { cn, shallowEqualProps } from "@/lib/utils";
 import { BORDER_RADIUS_PRESETS } from "@/lib/constants";
 import type { AppearanceProperties, CommonProperties, ElementPropertiesMap, ElementType } from "@/lib/types";
 import { AngleIcon } from "@phosphor-icons/react";
@@ -18,7 +19,7 @@ interface AppearanceSectionProps {
   onPropertyChange: (key: string, value: unknown) => void;
 }
 
-export function AppearanceSection({ currentProperties, onPropertyChange }: AppearanceSectionProps) {
+export const AppearanceSection = React.memo(function AppearanceSection({ currentProperties, onPropertyChange }: AppearanceSectionProps) {
   const props = currentProperties as AppearanceProperties & CommonProperties;
 
   return (
@@ -60,4 +61,4 @@ export function AppearanceSection({ currentProperties, onPropertyChange }: Appea
       </Field>
     </Section>
   );
-}
+}, shallowEqualProps);

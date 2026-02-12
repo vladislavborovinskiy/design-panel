@@ -1,3 +1,4 @@
+import * as React from "react";
 import { Section } from "@/components/DesignPanel/controls/Section";
 import { Field } from "@/components/DesignPanel/controls/Field";
 import { SpacingInput } from "@/components/DesignPanel/controls/SpacingInput";
@@ -5,6 +6,7 @@ import { PaddingIcon } from "@/components/DesignPanel/icons/PaddingIcon";
 import { PaddingBlockIcon } from "@/components/DesignPanel/icons/PaddingBlockIcon";
 import { MarginIcon } from "@/components/DesignPanel/icons/MarginIcon";
 import { MarginBlockIcon } from "@/components/DesignPanel/icons/MarginBlockIcon";
+import { shallowEqualProps } from "@/lib/utils";
 import type { CommonProperties, ElementPropertiesMap, ElementType, SpacingValue } from "@/lib/types";
 
 interface LayoutSectionProps {
@@ -12,7 +14,7 @@ interface LayoutSectionProps {
   onSpacingChange: (property: "padding" | "margin", side: keyof SpacingValue, value: string) => void;
 }
 
-export function LayoutSection({ currentProperties, onSpacingChange }: LayoutSectionProps) {
+export const LayoutSection = React.memo(function LayoutSection({ currentProperties, onSpacingChange }: LayoutSectionProps) {
   const props = currentProperties as CommonProperties;
 
   return (
@@ -36,4 +38,4 @@ export function LayoutSection({ currentProperties, onSpacingChange }: LayoutSect
       </Field>
     </Section>
   );
-}
+}, shallowEqualProps);

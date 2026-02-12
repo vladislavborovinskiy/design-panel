@@ -1,3 +1,4 @@
+import * as React from "react";
 import { Section } from "@/components/DesignPanel/controls/Section";
 import { Field } from "@/components/DesignPanel/controls/Field";
 import { ComboInput } from "@/components/DesignPanel/controls/ComboInput";
@@ -9,6 +10,7 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/Select";
+import { shallowEqualProps } from "@/lib/utils";
 import { OBJECT_FIT_OPTIONS, ASPECT_RATIO_PRESETS } from "@/lib/constants";
 import type { ImageElementProperties, ElementPropertiesMap, ElementType } from "@/lib/types";
 
@@ -17,20 +19,14 @@ interface ImageSectionProps {
   onPropertyChange: (key: string, value: unknown) => void;
 }
 
-export function ImageSection({ currentProperties, onPropertyChange }: ImageSectionProps) {
+export const ImageSection = React.memo(function ImageSection({
+  currentProperties,
+  onPropertyChange,
+}: ImageSectionProps) {
   const props = currentProperties as ImageElementProperties;
 
   return (
     <Section title='Properties'>
-      <Field label='Source'>
-        <Input
-          value={props.src}
-          onChange={(e) => onPropertyChange("src", e.target.value)}
-          className='h-8 text-xs'
-          placeholder='https://...'
-        />
-      </Field>
-
       <Field label='Alt Text'>
         <Input
           value={props.alt}
@@ -67,4 +63,4 @@ export function ImageSection({ currentProperties, onPropertyChange }: ImageSecti
       </div>
     </Section>
   );
-}
+}, shallowEqualProps);

@@ -1,5 +1,7 @@
+import * as React from "react";
 import { Section } from "@/components/DesignPanel/controls/Section";
 import { ColorPicker } from "@/components/DesignPanel/controls/ColorPicker";
+import { shallowEqualProps } from "@/lib/utils";
 import type { ElementPropertiesMap, ElementType } from "@/lib/types";
 
 interface BackgroundSectionProps {
@@ -7,7 +9,7 @@ interface BackgroundSectionProps {
   onPropertyChange: (key: string, value: unknown) => void;
 }
 
-export function BackgroundSection({ currentProperties, onPropertyChange }: BackgroundSectionProps) {
+export const BackgroundSection = React.memo(function BackgroundSection({ currentProperties, onPropertyChange }: BackgroundSectionProps) {
   const props = currentProperties as { backgroundColor: string };
 
   return (
@@ -18,4 +20,4 @@ export function BackgroundSection({ currentProperties, onPropertyChange }: Backg
       />
     </Section>
   );
-}
+}, shallowEqualProps);

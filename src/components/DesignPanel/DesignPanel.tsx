@@ -10,6 +10,7 @@ import { LayoutSection } from "./sections/LayoutSection";
 import { BorderSection } from "./sections/BorderSection";
 import { AppearanceSection } from "./sections/AppearanceSection";
 import { ShadowSection } from "./sections/ShadowSection";
+import { UploadSection } from "./sections/UploadSection";
 import { ImageSection } from "./sections/ImageSection";
 import { ButtonSection } from "./sections/ButtonSection";
 import type { ElementType, ElementPropertiesMap, SpacingValue } from "@/lib/types";
@@ -36,7 +37,8 @@ export function DesignPanel({
   const showContent = selectedElementType === "text" || selectedElementType === "button";
   const showTypography = selectedElementType === "text" || selectedElementType === "button";
   const showTextColor = selectedElementType === "text" || selectedElementType === "button";
-  const showImage = selectedElementType === "image";
+  const showImage = selectedElementType === "image" || selectedElementType === "div";
+  const showImageProperties = selectedElementType === "image";
   const showButton = selectedElementType === "button";
 
   return (
@@ -48,6 +50,12 @@ export function DesignPanel({
 
         <ScrollArea className='h-[calc(100vh-8rem)]'>
           <SectionScope scopeKey={selectedElementType}>
+          {showImage && (
+            <UploadSection
+              currentProperties={currentProperties}
+              onPropertyChange={onPropertyChange}
+            />
+          )}
           {showContent && (
             <ContentSection
               selectedElementType={selectedElementType}
@@ -84,7 +92,7 @@ export function DesignPanel({
             currentProperties={currentProperties}
             onPropertyChange={onPropertyChange}
           />
-          {showImage && (
+          {showImageProperties && (
             <ImageSection
               currentProperties={currentProperties}
               onPropertyChange={onPropertyChange}

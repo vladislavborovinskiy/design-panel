@@ -1,3 +1,4 @@
+import * as React from "react";
 import { Section } from "@/components/DesignPanel/controls/Section";
 import { Field } from "@/components/DesignPanel/controls/Field";
 import { ComboInput } from "@/components/DesignPanel/controls/ComboInput";
@@ -9,7 +10,7 @@ import {
   SelectItem,
 } from "@/components/ui/Select";
 import { ButtonGroup } from "@/components/ui/ButtonGroup";
-import { cn } from "@/lib/utils";
+import { cn, shallowEqualProps } from "@/lib/utils";
 import {
   FONT_FAMILIES,
   FONT_WEIGHTS,
@@ -67,7 +68,7 @@ interface TypographySectionProps {
   onPropertyChange: (key: string, value: unknown) => void;
 }
 
-export function TypographySection({ currentProperties, onPropertyChange }: TypographySectionProps) {
+export const TypographySection = React.memo(function TypographySection({ currentProperties, onPropertyChange }: TypographySectionProps) {
   const props = currentProperties as TextElementProperties;
 
   return (
@@ -167,4 +168,4 @@ export function TypographySection({ currentProperties, onPropertyChange }: Typog
       </div>
     </Section>
   );
-}
+}, shallowEqualProps);

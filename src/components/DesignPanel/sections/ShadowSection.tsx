@@ -1,3 +1,4 @@
+import * as React from "react";
 import { Section } from "@/components/DesignPanel/controls/Section";
 import {
   Select,
@@ -6,7 +7,7 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/Select";
-import { cn } from "@/lib/utils";
+import { cn, shallowEqualProps } from "@/lib/utils";
 import { SHADOW_PRESETS } from "@/lib/constants";
 import type { AppearanceProperties, ElementPropertiesMap, ElementType } from "@/lib/types";
 import { SubtractSquareIcon } from "@phosphor-icons/react";
@@ -16,7 +17,7 @@ interface ShadowSectionProps {
   onPropertyChange: (key: string, value: unknown) => void;
 }
 
-export function ShadowSection({ currentProperties, onPropertyChange }: ShadowSectionProps) {
+export const ShadowSection = React.memo(function ShadowSection({ currentProperties, onPropertyChange }: ShadowSectionProps) {
   const props = currentProperties as AppearanceProperties;
 
   return (
@@ -43,4 +44,4 @@ export function ShadowSection({ currentProperties, onPropertyChange }: ShadowSec
       </Select>
     </Section>
   );
-}
+}, shallowEqualProps);
